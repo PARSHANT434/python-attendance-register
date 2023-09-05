@@ -1,0 +1,49 @@
+import random
+
+# Define the player's car
+player_car = "[==]"
+player_position = 1  # Start in the middle lane
+
+# Define the road
+road = ["   |   " for _ in range(5)]  # 5 lanes
+
+# Function to display the game screen
+def display_game():
+    for lane in road:
+        print(lane)
+    print(player_car)
+
+# Main game loop
+while True:
+    # Display the game screen
+    display_game()
+
+    # Ask the player to move left, right, or quit
+    action = input("Press 'L' to move left, 'R' to move right, or 'Q' to quit: ").upper()
+
+    # Check for user input
+    if action == 'Q':
+        print("Thanks for playing!")
+        break
+    elif action == 'L':
+        if player_position > 0:
+            player_position -= 1
+    elif action == 'R':
+        if player_position < len(road) - 1:
+            player_position += 1
+
+    # Clear the road
+    road = ["   |   " for _ in range(5)]
+
+    # Place the player's car in the new position
+    road[player_position] = player_car
+
+    # Generate random obstacles (for example, 'X') on the road
+    for i in range(len(road)):
+        if random.randint(1, 10) == 1:
+            road[i] = " [X] "
+
+    # Check for collisions with obstacles
+    if "[X]" in road[player_position]:
+        print("Game Over! You crashed into an obstacle.")
+        break
